@@ -350,7 +350,7 @@
         audio.src = `${path}${myPlaylist[index].fileName}`
         currentlyPlaying = myPlaylist[index].id
         if (!event) return 
-        else if(event.target.id === 'next'|| 'prev'|| event.target.classList.contains('songs')){
+        else if(event.target.id === 'next'|| 'prev'|| event.target.classList.contains('songs')|| event.type === "ended"){
             console.log('I see you')
             audio.play()
             wrapper.classList.add('play');
@@ -395,12 +395,18 @@
         lis[index].classList.remove('active')
          
             if(index === lis.length - 1){
+                
                 index = 0
                 if(!auto || repeat % 3 == 2 ){  
                     init(index,event)
+                    
+                }else{
                    
+                    play.classList.remove('pause');
+                    wrapper.classList.remove('play');
                 }
             }else{
+                
                 index ++
                 init(index, event);   
             }
@@ -479,14 +485,16 @@
     seeker.addEventListener('mousedown', ()=>{
         seek = true;
         audioPositionUpdate()})
-    audio.addEventListener('ended', ()=>{
+    audio.addEventListener('ended', (event)=>{
         
         auto = 1
-        if (repeat % 3 == 2){
-            nextTrack();
-        }else if(repeat % 3 == 1){
+        if(repeat % 3 == 1){
             audio.play();
-        }
+        }else{
+             nextTrack(event);
+         }
+        
+         
     })
     audio.addEventListener('timeupdate', updateTimers)
     volume.addEventListener('change', volumeControl )
