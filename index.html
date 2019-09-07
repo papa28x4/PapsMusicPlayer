@@ -394,13 +394,11 @@
     const nextTrack =(event)=>{
         lis[index].classList.remove('active')
             if(index === lis.length - 1){
-                
                 index = 0
                 if(!auto || repeat % 3 == 2 ){  
                     init(index,event)
                     
                 }else{
-                   
                     play.classList.remove('pause');
                     wrapper.classList.remove('play');
                 }
